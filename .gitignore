@@ -1,2 +1,8 @@
+# Don't read my IDE settings!
 .vscode
+
+# Don't read any compiled binaries!
 __pycache__
+
+# Don't read my super-secret files!
+.env
