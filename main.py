@@ -48,14 +48,25 @@ async def on_message(message):
     if client.user not in message.mentions:
         return
 
-    # Strip the mention from the message
-    message.content = message.content.replace(
-        "<@{}> ".format(client.user.id), "")
+    # Create some arguments for the message
+    args = {
+        # Strip the mention from the message
+        "content": message.content.replace(
+            "<@{}> ".format(client.user.id), ""),
+        # Strip the command only from the message
+        "command": message.content.replace(
+            "<@{}> ".format(client.user.id), "").split(" ")[0],
+        # Strip the remainder of the message, without command or mention
+        "remainder": message.content.replace(
+            "<@{}> ".format(client.user.id), "").replace(
+            message.content.replace(
+                "<@{}> ".format(client.user.id), "").split(" ")[0], ""),
+    }
 
     # Check if the message is a command
-    if message.content in client.commandsList.keys():
+    if args["command"] in client.commandsList.keys():
         # Run the command
-        await client.commandsList[message.content]["command"](client, message)
+        await client.commandsList[args["command"]]["command"](client, message, args)
 
 
 # ===== Main ===================================================================
