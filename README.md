@@ -4,6 +4,10 @@ This is a discord bot designed in a Python-based library, for simplicity of
 computation-esque and programming-relative tasks. The structure is simplified
 for ease of scalability.
 
+Unlike other bots, this bot utilizes the `discord.py` library directly - A
+command framework is designed from scratch, rather than through utilizing the
+`discord.ext.commands` library.
+
 # License TL;DR
 
 This project is distributed under the MIT license. This is a paraphrasing of a
