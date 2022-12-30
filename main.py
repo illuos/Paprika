@@ -65,6 +65,11 @@ async def on_message(message):
 
     # Check if the message is a command
     if args["command"] in client.commandsList.keys():
+        # Check if the command is owner only
+        if client.commandsList[args["command"]]["owner"] and not message.author.id == config["DISCORD_OWNER_ID"]:
+            await message.channel.send("This command is owner only.")
+            return
+
         # Run the command
         await client.commandsList[args["command"]]["command"](client, message, args)
 
