@@ -21,9 +21,24 @@ async def on_ready():
     # Load in all commands dynamically based on the files in the commands folder
     client.commandsList = index.indexAllCommands()
 
-    # Verify all fields are present in the commands
-    fieldsList = ["owner", "description", "usage", "command"]
+    # Sort the commands into groups
+    client.groups = {
+        "control": {
+            "emoji": "🎮",
+            "commands": []
+        },
+        "status": {
+            "emoji": "🛠",
+            "commands": []
+        },
+    }
+    for command in client.commandsList.keys():
+        client.groups[client.commandsList[command]
+                      ["group"]]["commands"].append(command)
 
+    # Verify all fields are present in the commands
+    fieldsList = ["name", "owner", "group", "description",
+                  "usage", "detailed", "command"]
     for command in client.commandsList.keys():
         for field in fieldsList:
             if field not in client.commandsList[command]:
@@ -51,22 +66,18 @@ async def on_message(message):
     # Create some arguments for the message
     args = {
         # Strip the mention from the message
-        "content": message.content.replace(
-            "<@{}> ".format(client.user.id), ""),
+        "content": message.content.replace("<@{}> ".format(client.user.id), ""),
         # Strip the command only from the message
-        "command": message.content.replace(
-            "<@{}> ".format(client.user.id), "").split(" ")[0],
-        # Strip the remainder of the message, without command or mention
+        "command": message.content.replace("<@{}> ".format(client.user.id), "").split(" ")[0],
+        # Strip the remainder of the message, without command or mention, stripping the first space
         "remainder": message.content.replace(
-            "<@{}> ".format(client.user.id), "").replace(
-            message.content.replace(
-                "<@{}> ".format(client.user.id), "").split(" ")[0], ""),
+            "<@{}> ".format(client.user.id), "").replace(message.content.replace("<@{}> ".format(client.user.id), "").split(" ")[0], "", 1).strip()
     }
 
     # Check if the message is a command
     if args["command"] in client.commandsList.keys():
         # Check if the command is owner only
-        if client.commandsList[args["command"]]["owner"] and not message.author.id == config["DISCORD_OWNER_ID"]:
+        if client.commandsList[args["command"]]["owner"] and not str(message.author.id) == str(config["DISCORD_OWNER_ID"]):
             await message.channel.send("This command is owner only.")
             return
 

@@ -7,8 +7,11 @@ def puppet():
         await message.channel.send(args["remainder"])
 
     return {
+        "name": "puppet",
         "owner": True,
-        "description": "Sends a message as Paprika",
-        "usage": "`@Paprika puppet <message>`",
+        "group": "control",
+        "description": "Sends a message as Paprika.",
+        "usage": ["`@Paprika puppet <message>`"],
+        "detailed": "Send a message as me. This can only be used by my owner. Upon usage, I'll delete your message, and send the remainder of what you said as a message from me.",
         "command": command
     }
