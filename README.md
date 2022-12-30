@@ -4,9 +4,17 @@ This is a discord bot designed in a Python-based library, for simplicity of
 computation-esque and programming-relative tasks. The structure is simplified
 for ease of scalability.
 
+![img](img/pfp.png)
+
 Unlike other bots, this bot utilizes the `discord.py` library directly - A
 command framework is designed from scratch, rather than through utilizing the
 `discord.ext.commands` library.
+
+Commands can be placed within the `commands` folder in order to create a new
+command. Every command has a main function, as well as an `async command()`
+function, which can be executed. Commands will automatically be loaded into the
+bot structure, and the `help` command will automatically update with new
+commands.
 
 # License TL;DR
 
