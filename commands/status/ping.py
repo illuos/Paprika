@@ -5,6 +5,7 @@ def ping():
         return
 
     return {
+        "owner": False,
         "description": "Responds with a 'pong' message",
         "usage": "`@Paprika ping`",
         "command": command

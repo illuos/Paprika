@@ -21,6 +21,15 @@ async def on_ready():
     # Load in all commands dynamically based on the files in the commands folder
     client.commandsList = index.indexAllCommands()
 
+    # Verify all fields are present in the commands
+    fieldsList = ["owner", "description", "usage", "command"]
+
+    for command in client.commandsList.keys():
+        for field in fieldsList:
+            if field not in client.commandsList[command]:
+                print(f"Error: {command} is missing the {field} field")
+                exit(1)
+
 
 # ===== Command handling =======================================================
 
